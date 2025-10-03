@@ -1,0 +1,18 @@
+{
+    "smitpatel2002": {
+        "id": 1,
+        "username": "smitpatel2002",
+        "full_name": "smit patel",
+        "email": "smitpatel@example.com",
+        "hashed_password": "$2b$12$pnmsbVcdtTR5Cye1jDl04O2gDaO5kqA.//DxSkWWUyjP0x5pvkB/6",
+        "disabled": false
+    },
+    "arthurmorgan2018": {
+        "id": 2,
+        "username": "arthurmorgan2018",
+        "full_name": "arthur morgan",
+        "email": "arthurmorgan@example.com",
+        "hashed_password": "$2b$12$VliOmWDAVYVUd6s0xKr5oeZ5EKUZ0O1OlfoIwzkdlegB0dDrqksbG",
+        "disabled": false
+    }
+}

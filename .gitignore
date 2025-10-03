@@ -1,0 +1,16 @@
+Environments
+.venv/
+.mypy_cache/
+.pytest_cache/
+
+Docker Secrets and Local Data
+.env
+postgres_data/
+
+Python Build Files
+pycache/
+*.pyc
+
+Local IDE/OS Files
+.DS_Store
+.vscode/
