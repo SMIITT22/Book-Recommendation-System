@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from app.core.database import engine, Base, AsyncSessionLocal
 from app.models import orm_models
 from sqlalchemy.future import select
-from app.api.v1 import auth, books
+from app.api.v1 import auth, books, reviews
 
 # initialize FastAPI app
 app = FastAPI(title="Book Recommendation System API")
@@ -34,6 +34,8 @@ def read_root():
 # login route
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 
-# Add the new books router
+# Add the books router
 app.include_router(books.router, prefix="/api/v1/books", tags=["Books"])
 
+# Add the reviews router
+app.include_router(reviews.router, prefix="/api/v1", tags=["Reviews"])
