@@ -12,10 +12,11 @@ router = APIRouter()
 @router.get("/books/{book_id}/reviews", response_model=List[review_schema.Review])
 async def get_reviews_for_book(
     book_id: int,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user: user_schema.User = Depends(get_current_user)
 ):
     """
-    Retrieve all reviews for a specific book. This is a public endpoint.
+    Retrieve all reviews for a specific book. Requires authentication.
     """
     reviews = await review_service.get_reviews_for_book(db, book_id=book_id)
     return reviews
