@@ -31,7 +31,7 @@ def read_root():
     """A simple endpoint to confirm the API is running."""
     return {"status": "ok", "message": "Welcome to the Book Recommendation System API!"}
 
-# login route
+# Add the login router
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 
 # Add the books router

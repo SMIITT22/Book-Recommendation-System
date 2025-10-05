@@ -18,7 +18,7 @@ This project is a backend API for a simplified book recommendation system.
 
 ## 1. Project Overview
 
-The API supports user authentication, listing books with dynamically calculated ratings, and a complete review and rating system. It is designed to be consumed by a frontend application. The implementation follows all core requirements of the case study, including a layered architecture, a reproducible Docker environment, and secure, asynchronous endpoints.
+The API supports user authentication, listing books with dynamically calculated average ratings, and a complete review and rating system. It does not contain frontend UI, but robust backend system has been implemented by keeping frontend UI in mind. The implementation follows all core requirements of the case study, including a layered architecture, a reproducible Docker environment, and secure, asynchronous endpoints.
 
 ---
 
@@ -59,7 +59,7 @@ Now you must manually set the following variables in the newly created `.env` fi
 - `SECRET_KEY`
 - `POSTGRES_PASSWORD`
 
-To generate a secure `SECRET_KEY`, you can run this Python code:
+To generate a secure `SECRET_KEY`, you can run below Python script:
 
 ```python
 import secrets
@@ -69,7 +69,7 @@ secret_key = secrets.token_urlsafe(32)
 print(secret_key)
 ```
 
-You can run this on your local machine or use [https://www.online-python.com/](https://www.online-python.com/).
+You can run above script on your local machine or if you dont have python installed on your local machine then visit this python's interpreter : [https://www.online-python.com/](https://www.online-python.com/).
 
 **Note:** If your `POSTGRES_PASSWORD` contains special characters, make sure to URL-encode it before inserting it into any connection string.
 
@@ -131,7 +131,8 @@ Each layer is isolated and communicates only with adjacent layers, and dependenc
 
 ## 4. How to Run Tests
 
-The project includes a suite of integration tests that verify the service layer logic while mocking the repository layer, as required by the case study.
+The project includes both unit tests and integration tests.
+Unit tests validate individual service and utility functions in isolation (e.g., password hashing and verification), while integration tests verify the service layer endpoints using mocked repository dependencies to ensure end-to-end correctness.
 
 **Step 1: Ensure the Application is Running**
 
@@ -154,7 +155,7 @@ docker-compose exec web pytest
 You will see the test results in your terminal, concluding with a summary indicating that all tests have passed.
 
 ```
-============================= 3 passed in X.XXs ==============================
+============================= 6 passed in X.XXs ==============================
 ```
 
 ---
@@ -171,7 +172,7 @@ A protected endpoint (`/api/v1/books/`) to list all books. Supports searching by
 Each book's average rating is dynamically calculated from user reviews stored in the database.
 
 **Review System:**
-- `POST /api/v1/books/{book_id}/reviews`: Add or update a review (rating 1–5 and text).  
+- `POST /api/v1/books/{book_id}/reviews`: Add or update a review (rating 1–5 and review_text).  
 - `GET /api/v1/books/{book_id}/reviews`: Fetch all reviews for a book.
 
 ---
@@ -191,7 +192,7 @@ Each book's average rating is dynamically calculated from user reviews stored in
 
 ## 7. API Usage
 
-Most endpoints require authentication using a JWT token.
+All endpoints require authentication using a JWT token except for login and read root.
 
 **Available users (from `users.json`):**
 - Username: `smitpatel2002` — Password: `smit123`
@@ -199,7 +200,7 @@ Most endpoints require authentication using a JWT token.
 
 **Authentication via Swagger UI:**
 1. Open `http://localhost:8000/docs`.
-2. Click the green **Authorize** button.
+2. Click the green **Authorize** button (upper right corner).
 3. In the dialog, enter a username and password (listed above). The Token URL is `/api/v1/auth/login` and the flow is `password`.
 4. Click **Authorize** in the dialog. Swagger UI will obtain an access token and store it for you.
 5. After authorizing once, the token is automatically attached to subsequent requests for endpoints that require JWT authentication. You do not need to manually add the `Authorization: Bearer <token>` header for each call.
@@ -230,7 +231,8 @@ book-recommendation-system/
 │   ├── models/         # SQLAlchemy ORM models
 │   ├── repositories/   # Data access layer
 │   ├── schemas/        # Pydantic models
-│   └── services/       # Business logic
+│   │── services/       # Business logic
+│   │── main.py         # Initializing Fast API instance (root file)
 ├── tests/              # Pytest test suite
 ├── books.json          # Book data for seeding
 ├── users.json          # In-memory user seed file
